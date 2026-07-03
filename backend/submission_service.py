@@ -1,0 +1,39 @@
+import httpx
+
+from classifier import classify_submission
+from exceptions import PistonExecutionError, PistonTimeoutError, PistonUnavailableError
+from piston import execute_on_piston
+from schemas import SubmissionRequest, SubmissionResponse
+
+
+async def process_submission(
+    client: httpx.AsyncClient,
+    submission: SubmissionRequest,
+) -> SubmissionResponse:
+    try:
+        result = await execute_on_piston(
+            client=client,
+            language=submission.language,
+            version=submission.version,
+            code=submission.code,
+        )
+    except httpx.ConnectError as exc:
+        raise PistonUnavailableError from exc
+    except httpx.TimeoutException as exc:
+        raise PistonTimeoutError from exc
+    except httpx.HTTPStatusError as exc:
+        raise PistonExecutionError(str(exc)) from exc
+
+    classification = classify_submission(
+        exit_code=result["exit_code"],
+        stdout=result["stdout"],
+        stderr=result["stderr"],
+        expected_output=submission.expected_output,
+    )
+
+    return SubmissionResponse(
+        classification=classification,
+        stdout=result["stdout"],
+        stderr=result["stderr"],
+        execution_time=result["execution_time"],
+    )
