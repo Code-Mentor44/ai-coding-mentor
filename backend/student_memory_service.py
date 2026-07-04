@@ -4,6 +4,7 @@ import logging
 import datetime
 import asyncio
 import cognee_service
+from exceptions import RATE_LIMIT_FEEDBACK_MESSAGE, is_rate_limit_error
 
 logger = logging.getLogger("student_memory_service")
 
@@ -102,7 +103,7 @@ async def record_learning_attempt(student_id: str, record: dict) -> dict:
     try:
         # Save structured record using Cognee
         result = await cognee_service.remember_data(data_string, dataset_name=dataset_name)
-        
+
         # Schedule graph improvement in the background so it doesn't block the API response
         asyncio.create_task(cognee_service.improve_graph(dataset_name=dataset_name))
         
@@ -118,15 +119,18 @@ async def recall_student_history(student_id: str, concept: str) -> list[str]:
     """
     dataset_name = f"student_{student_id}"
     query = f"Student attempts and feedback for concept: {concept}"
-    
+
     try:
         results = await cognee_service.recall_data(query, dataset_name=dataset_name)
         if not results:
             return []
-            
-        # Parse and return clean text representations of past lessons
+
         return cognee_service.extract_text_from_recall_result(results)
     except Exception as exc:
+        if is_rate_limit_error(exc):
+            logger.warning("Gemini quota/rate limit during student history recall; continuing without history.")
+            return []
+
         logger.warning(f"Could not recall student history: {exc}")
         return []
 
@@ -200,8 +204,9 @@ async def generate_mentoring_feedback(
     )
 
     try:
+        from litellm.exceptions import RateLimitError
         import litellm
-        
+
         kwargs = {
             "model": model_str,
             "messages": [
@@ -209,13 +214,21 @@ async def generate_mentoring_feedback(
                 {"role": "user", "content": user_prompt},
             ],
             "api_key": llm_api_key,
+            "timeout": 30.0,
         }
         if llm_endpoint:
             kwargs["base_url"] = llm_endpoint
 
         response = await litellm.acompletion(**kwargs)
         return response.choices[0].message.content.strip()
+    except RateLimitError as exc:
+        logger.warning("Gemini quota/rate limit during mentoring feedback: %s", exc)
+        return RATE_LIMIT_FEEDBACK_MESSAGE
     except Exception as exc:
+        if is_rate_limit_error(exc):
+            logger.warning("Gemini quota/rate limit during mentoring feedback: %s", exc)
+            return RATE_LIMIT_FEEDBACK_MESSAGE
+
         logger.error(f"Error calling LLM in student memory service: {exc}")
         return f"Error generating mentoring feedback: {str(exc)}"
 
