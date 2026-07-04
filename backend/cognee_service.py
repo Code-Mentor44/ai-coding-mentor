@@ -2,6 +2,8 @@ import os
 import logging
 import dotenv
 import cognee
+import asyncio
+from exceptions import is_rate_limit_error
 
 # Ensure environment variables are loaded at startup
 dotenv.load_dotenv()
@@ -129,14 +131,18 @@ async def remember_data(
     Store text memory or instructions into Cognee's graph structure.
     Uses Cognee's V1.2 remember(..., dataset_name=...) API signature.
     """
+    
     logger.info(f"Remembering content in dataset '{dataset_name}' (session_id: {session_id})")
 
     try:
         if session_id:
+           
+           
             result = await cognee.remember(data, dataset_name=dataset_name, session_id=session_id)
         else:
-            result = await cognee.remember(data, dataset_name=dataset_name)
+           result = await cognee.remember(data, dataset_name=dataset_name)
 
+      
         return {
             "status": getattr(result, "status", "completed"),
             "dataset_name": getattr(result, "dataset_name", dataset_name),
@@ -144,6 +150,7 @@ async def remember_data(
         }
     except Exception as exc:
         logger.exception("Failed to remember data in Cognee.")
+      
         raise exc
 
 
@@ -156,44 +163,41 @@ async def recall_data(
     Retrieve contextual details from the knowledge graph using a semantic query.
     Uses Cognee's V1.2 recall(..., datasets=[...]) API signature.
     """
+
     logger.info(f"Recalling context for query '{query}' from datasets: ['{dataset_name}']")
 
     try:
         if session_id:
-            results = await cognee.recall(query_text=query, datasets=[dataset_name], session_id=session_id)
+            results = await asyncio.wait_for(
+                cognee.recall(
+                    query_text=query,
+                    datasets=[dataset_name],
+                    session_id=session_id,
+                ),
+                timeout=3,
+            )
         else:
-            results = await cognee.recall(query_text=query, datasets=[dataset_name])
+            results = await asyncio.wait_for(
+                cognee.recall(
+                    query_text=query,
+                    datasets=[dataset_name],
+                ),
+                timeout=3,
+            )
 
         return serialize_recall_result(results)
+
+    except asyncio.TimeoutError:
+        logger.warning("Cognee recall timed out. Returning empty history.")
+        return []
+
     except Exception as exc:
+        if is_rate_limit_error(exc):
+            logger.warning("Gemini quota exceeded. Returning empty history.")
+            return []
+
         logger.exception("Failed to recall data from Cognee.")
-        raise exc
-
-
-async def improve_graph(
-    dataset_name: str = "main_dataset",
-    session_ids: list[str] | None = None,
-) -> dict:
-    """
-    Enriches the knowledge graph by running graph compilation, node triplet calculations,
-    and semantic vector index rebuilding.
-    """
-    logger.info(f"Triggering Cognee improve pipeline for dataset: '{dataset_name}'")
-
-    try:
-        if session_ids:
-            result = await cognee.improve(dataset=dataset_name, session_ids=session_ids)
-        else:
-            result = await cognee.improve(dataset=dataset_name)
-
-        return {
-            "status": "success",
-            "dataset_name": dataset_name,
-            "result": str(result),
-        }
-    except Exception as exc:
-        logger.exception("Failed to run Cognee graph improvement.")
-        raise exc
+        raise
 
 
 async def prune_dataset(dataset_name: str) -> dict:
@@ -204,6 +208,9 @@ async def prune_dataset(dataset_name: str) -> dict:
     try:
         await cognee.prune.prune_data()
         return {"status": "success", "dataset_name": dataset_name}
+    except Exception as exc:
+        logger.exception(f"Failed to prune dataset '{dataset_name}'.")
+        raise exc
     except Exception as exc:
         logger.exception(f"Failed to prune dataset '{dataset_name}'.")
         raise exc

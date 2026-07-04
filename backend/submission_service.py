@@ -6,11 +6,11 @@ from piston import execute_on_piston
 from schemas import SubmissionRequest, SubmissionResponse
 import student_memory_service
 
-
 async def process_submission(
     client: httpx.AsyncClient,
     submission: SubmissionRequest,
 ) -> SubmissionResponse:
+
     try:
         result = await execute_on_piston(
             client=client,
@@ -18,6 +18,7 @@ async def process_submission(
             version=submission.version,
             code=submission.code,
         )
+    
     except httpx.ConnectError as exc:
         raise PistonUnavailableError from exc
     except httpx.TimeoutException as exc:
@@ -32,6 +33,7 @@ async def process_submission(
         expected_output=submission.expected_output,
     )
 
+    
     # Call Student Learning Memory module to orchestrate feedback and recall history
     memory_result = await student_memory_service.orchestrate_mentoring_and_memory(
         student_id=submission.student_id,
@@ -41,6 +43,7 @@ async def process_submission(
         stderr=result["stderr"],
         classification=classification,
     )
+    
 
     return SubmissionResponse(
         classification=classification,
