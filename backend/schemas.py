@@ -16,6 +16,10 @@ class SubmissionRequest(BaseModel):
         default=None,
         description="Optional expected stdout for output validation",
     )
+    student_id: str | None = Field(
+        default=None,
+        description="Optional student identifier to load and save their learning memory",
+    )
 
 
 class SubmissionResponse(BaseModel):
@@ -26,4 +30,12 @@ class SubmissionResponse(BaseModel):
     stderr: str
     execution_time: int = Field(
         description="Total compile and run wall-clock time in milliseconds",
+    )
+    feedback: str | None = Field(
+        default=None,
+        description="Tutoring feedback or Socratic hints personalized based on student learning memory",
+    )
+    history_context: list[str] | None = Field(
+        default=None,
+        description="List of recalled past mistakes or feedbacks matching the student history context",
     )
