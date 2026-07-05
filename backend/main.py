@@ -26,16 +26,14 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.get("/health")
-async def health_check() -> dict[str, str]:
-    return {"status": "ok", "message": "Backend is running"}
 
 
 @app.post("/api/submit", response_model=SubmissionResponse)
@@ -48,17 +46,26 @@ async def submit_code(
     try:
         return await process_submission(client, submission)
     except PistonUnavailableError as exc:
+        print(f"\n❌ PISTON UNAVAILABLE: {str(exc)}\n")
         raise HTTPException(
             status_code=503,
-            detail="Unable to reach the Piston code execution engine at http://localhost:2000",
+            detail="Unable to reach the Piston engine.",
         ) from exc
     except PistonTimeoutError as exc:
+        print(f"\n❌ PISTON TIMEOUT: {str(exc)}\n")
         raise HTTPException(
             status_code=504,
             detail="Piston code execution timed out",
         ) from exc
     except PistonExecutionError as exc:
+        print(f"\n❌ PISTON EXECUTION ERROR: {exc.message}\n")
         raise HTTPException(
             status_code=502,
             detail=exc.message,
+        ) from exc
+    except Exception as exc:
+        print(f"\n❌ UNCAUGHT FATAL ERROR (Likely OpenAI/Cognee): {str(exc)}\n")
+        raise HTTPException(
+            status_code=500,
+            detail=str(exc),
         ) from exc

@@ -9,42 +9,13 @@ export default function CodeEditor() {
     loading,
     submitCode,
     aiLoading,
+    language,
+    code,
+    mode,
+    changeLanguage,
+    changeMode,
+    setCode,
   } = useEditor();
-
-  const [mode, setMode] = useState("CP");
-
-  const cpTemplate = `class Solution {
-
-    public int[] twoSum(int[] nums, int target) {
-
-        return new int[]{};
-
-    }
-
-}`;
-
-  const examTemplate = `/*
-======================================
-          ONLINE ASSESSMENT
-======================================
-
-Question 1
-
-Solve the given problem.
-
-Good Luck!
-
-*/
-
-class Solution {
-
-    public int[] solve(int[] nums, int target) {
-
-        return new int[]{};
-
-    }
-
-}`;
 
   return (
     <div className="w-full">
@@ -58,16 +29,18 @@ class Solution {
           {/* Language */}
 
           <select
+            value={language}
+            onChange={(e) => changeLanguage(e.target.value)}
             className="bg-[#111827]
             border border-gray-700
             rounded-xl
             px-4
             py-2"
           >
-            <option>Java</option>
-            <option>C++</option>
-            <option>Python</option>
-            <option>JavaScript</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
           </select>
 
           {/* Theme */}
@@ -88,7 +61,7 @@ class Solution {
           <div className="flex overflow-hidden rounded-xl border border-gray-700">
 
             <button
-              onClick={() => setMode("CP")}
+              onClick={() => changeMode("CP")}
               className={`px-5 py-2 transition ${
                 mode === "CP"
                   ? "bg-cyan-500 text-black font-semibold"
@@ -99,7 +72,7 @@ class Solution {
             </button>
 
             <button
-              onClick={() => setMode("Exam")}
+              onClick={() => changeMode("Exam")}
               className={`px-5 py-2 transition ${
                 mode === "Exam"
                   ? "bg-violet-600 text-white font-semibold"
@@ -121,14 +94,16 @@ class Solution {
 
             <button
               onClick={runCode}
-              className="px-5 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 transition"
+              disabled={loading}
+              className="px-5 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-50 transition"
             >
               {loading ? "Running..." : "Run"}
             </button>
 
             <button
               onClick={submitCode}
-              className="px-5 py-2 rounded-xl bg-cyan-500 text-black font-semibold hover:scale-105 transition"
+              disabled={aiLoading}
+              className="px-5 py-2 rounded-xl bg-cyan-500 text-black font-semibold hover:scale-105 disabled:opacity-50 transition"
             >
               {aiLoading ? "Analyzing..." : "Submit"}
             </button>
@@ -201,9 +176,10 @@ class Solution {
 
       <Editor
         height="420px"
-        defaultLanguage="java"
+        language={language}
         theme="vs-dark"
-        defaultValue={mode === "CP" ? cpTemplate : examTemplate}
+        value={code}
+        onChange={(val) => setCode(val || "")}
 
         options={{
           fontSize: 16,
