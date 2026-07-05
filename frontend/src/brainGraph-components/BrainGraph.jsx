@@ -13,7 +13,7 @@ import {
     initialNodes,
     initialEdges,
     nodeTypes,
-} from "./graphData";
+} from "./GraphData";
 
 export default function BrainGraph() {
     const memoizedNodeTypes = useMemo(() => nodeTypes, []);
