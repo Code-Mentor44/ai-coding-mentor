@@ -1,8 +1,6 @@
-
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -63,7 +61,6 @@ const Signup = () => {
 
         navigate("/login");
     };
->>>>>>> Stashed changes
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#020617] px-6">
 
