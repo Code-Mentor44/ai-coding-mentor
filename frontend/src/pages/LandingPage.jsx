@@ -71,7 +71,7 @@ export default function LandingPage() {
             </a>
 
             <Link
-              to="/dashboard"
+              to="/login"
               className="rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-900 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-cyan-500/30"
             >
               Get Started
@@ -105,7 +105,7 @@ export default function LandingPage() {
               <a href="#about">About</a>
 
               <Link
-                to="/dashboard"
+                to="/login"
                 className="bg-cyan-400 text-center text-black py-3 rounded-xl font-semibold"
               >
                 Get Started
@@ -139,7 +139,7 @@ export default function LandingPage() {
 
             </span>
 
-            <h1 className="mt-6 text-5xl lg:text-6xl font-bold leading-[1.08] tracking-[-0.03em]">
+            <h1 className="mt-6 text-4xl lg:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-[-0.03em]">
 
               Learn.
 
@@ -170,7 +170,7 @@ export default function LandingPage() {
             <div className="flex flex-wrap gap-5 mt-10">
 
               <Link
-                to="/dashboard"
+                to="/login"
                 className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-900 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-cyan-500/30"
               >
 
@@ -265,7 +265,7 @@ export default function LandingPage() {
             Features
           </span>
 
-          <h2 className="text-4xl lg:text-5xl font-bold mt-4">
+          <h2 className="text-4xl lg:text-4xl lg:text-5xl font-bold mt-4">
             Everything You Need
           </h2>
 
@@ -310,7 +310,7 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ delay: index * .15 }}
               whileHover={{ y: -10 }}
-              className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8"
+              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07]"
             >
               <div
                 className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center text-3xl`}
@@ -337,17 +337,17 @@ export default function LandingPage() {
         id="stats"
         className="max-w-7xl mx-auto px-6 pb-24"
       >
-        <div className="rounded-[40px] bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-violet-500/10 border border-white/10 p-12">
+        <div className="rounded-[32px] bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-violet-500/10 border border-white/10 px-8 py-10 lg:px-12 lg:py-12">
 
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center"
           >
 
             <div>
-              <h2 className="text-5xl font-bold text-cyan-400">
+              <h2 className="text-4xl lg:text-5xl font-bold text-cyan-400">
                 10K+
               </h2>
 
@@ -604,7 +604,7 @@ export default function LandingPage() {
             </p>
 
             <Link
-              to="/dashboard"
+              to="/login"
               className="inline-flex items-center gap-3 mt-10 px-10 py-5 rounded-2xl bg-cyan-400 text-black font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-cyan-500/30"
             >
 
