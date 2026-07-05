@@ -5,6 +5,65 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+
+    const [errors, setErrors] = useState({});
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+    const handleSignup = () => {
+
+        const newErrors = {};
+
+        if (!formData.fullName.trim()) {
+            newErrors.fullName = "Full name is required";
+        }
+
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+        ) {
+            newErrors.email = "Enter a valid email";
+        }
+
+        if (formData.password.length < 6) {
+            newErrors.password =
+                "Password must be at least 6 characters";
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            newErrors.confirmPassword =
+                "Passwords do not match";
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setErrors({});
+        localStorage.setItem(
+            "user",
+            JSON.stringify({
+                fullName: formData.fullName,
+                email: formData.email,
+                password: formData.password,
+            })
+        );
+
+        navigate("/login");
+    };
+>>>>>>> Stashed changes
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#020617] px-6">
 
