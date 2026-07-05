@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ContinueCard = () => {
     return (
@@ -84,10 +85,12 @@ const ContinueCard = () => {
 
                 <div className="flex flex-col justify-between">
 
-                    <button
+                    <Link
+                        to="/workspace"
                         className="
-                            flex
+                            inline-flex
                             items-center
+                            justify-center
                             gap-2
                             rounded-2xl
                             bg-cyan-400
@@ -95,16 +98,15 @@ const ContinueCard = () => {
                             py-4
                             font-semibold
                             text-black
+                            transition-all
+                            duration-300
                             hover:bg-cyan-300
-                            transition
+                            hover:scale-105
                         "
                     >
-
-                        Resume
-
+                        Resume Coding
                         <ArrowRight size={18} />
-
-                    </button>
+                    </Link>
 
                     <div className="mt-8 flex gap-8">
 

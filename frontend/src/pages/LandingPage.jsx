@@ -22,29 +22,29 @@ export default function LandingPage() {
 
       {/* Navbar */}
 
-      <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-slate-900/50 border-b border-white/10">
+        <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-2xl bg-[#020617]/70 border-b border-white/5">
 
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3 flex justify-between items-center">
 
           {/* Logo */}
 
           <div className="flex items-center gap-3">
 
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
 
-              <FiCpu size={24} />
+              <FiCpu size={20} />
 
             </div>
 
             <div>
 
-              <h1 className="font-bold text-xl">
+              <h1 className="font-semibold text-lg tracking-tight">
 
                 AI Coding Mentor
 
               </h1>
 
-              <p className="text-xs text-cyan-300">
+              <p className="text-[11px] text-cyan-300/80 tracking-wide">
 
                 Smart Coding Platform
 
@@ -56,7 +56,7 @@ export default function LandingPage() {
 
           {/* Desktop Menu */}
 
-          <nav className="hidden md:flex items-center gap-10">
+          <nav className="hidden md:flex items-center gap-8 text-[15px]">
 
             <a href="#features" className="hover:text-cyan-400 transition">
               Features
@@ -71,8 +71,8 @@ export default function LandingPage() {
             </a>
 
             <Link
-              to="/dashboard"
-              className="bg-cyan-400 text-black font-semibold px-6 py-3 rounded-xl hover:scale-105 transition"
+              to="/login"
+              className="rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-900 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-cyan-500/30"
             >
               Get Started
             </Link>
@@ -105,7 +105,7 @@ export default function LandingPage() {
               <a href="#about">About</a>
 
               <Link
-                to="/dashboard"
+                to="/login"
                 className="bg-cyan-400 text-center text-black py-3 rounded-xl font-semibold"
               >
                 Get Started
@@ -121,9 +121,9 @@ export default function LandingPage() {
 
       {/* Hero */}
 
-      <section className="relative max-w-7xl mx-auto px-6 pt-36 pb-24">
+      <section className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-20">
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
 
           {/* Left */}
 
@@ -133,13 +133,13 @@ export default function LandingPage() {
             transition={{ duration: .8 }}
           >
 
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300">
+            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/10 px-4 py-1.5 text-sm font-medium text-cyan-300">
 
               🚀 AI Powered Coding Platform
 
             </span>
 
-            <h1 className="text-5xl lg:text-7xl font-extrabold leading-tight mt-8">
+            <h1 className="mt-6 text-4xl lg:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-[-0.03em]">
 
               Learn.
 
@@ -157,7 +157,7 @@ export default function LandingPage() {
 
             </h1>
 
-            <p className="mt-8 text-lg text-gray-300 leading-8 max-w-xl">
+            <p className="mt-6 max-w-lg text-base leading-7 text-slate-400">
 
               AI Coding Mentor combines coding practice,
               competitive programming,
@@ -170,8 +170,8 @@ export default function LandingPage() {
             <div className="flex flex-wrap gap-5 mt-10">
 
               <Link
-                to="/dashboard"
-                className="bg-cyan-400 text-black px-8 py-4 rounded-2xl font-bold flex items-center gap-3 hover:scale-105 transition"
+                to="/login"
+                className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-900 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-cyan-500/30"
               >
 
                 Start Coding
@@ -180,7 +180,7 @@ export default function LandingPage() {
 
               </Link>
 
-              <button className="border border-white/20 px-8 py-4 rounded-2xl hover:bg-white/10 transition">
+              <button className="rounded-xl border border-white/10 px-6 py-3 text-sm font-medium text-slate-300 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/5">
 
                 Explore Features
 
@@ -199,15 +199,15 @@ export default function LandingPage() {
             className="relative"
           >
 
-            <div className="rounded-[35px] border border-cyan-500/20 bg-white/5 backdrop-blur-xl p-8">
+            <div className="rounded-[28px] border border-cyan-500/10 bg-white/5 p-6 backdrop-blur-2xl shadow-2xl shadow-cyan-500/10">
 
-              <div className="rounded-3xl bg-[#07111f] border border-cyan-500/20 p-6">
+              <div className="rounded-2xl border border-cyan-500/10 bg-[#07111f] p-5">
 
                 <div className="flex items-center gap-3 mb-6">
 
-                  <div className="w-12 h-12 rounded-xl bg-cyan-500 flex items-center justify-center">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-500">
 
-                    <FiCode size={24} />
+                    <FiCode size={18} />
 
                   </div>
 
@@ -265,7 +265,7 @@ export default function LandingPage() {
             Features
           </span>
 
-          <h2 className="text-4xl lg:text-5xl font-bold mt-4">
+          <h2 className="text-4xl lg:text-4xl lg:text-5xl font-bold mt-4">
             Everything You Need
           </h2>
 
@@ -310,7 +310,7 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ delay: index * .15 }}
               whileHover={{ y: -10 }}
-              className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8"
+              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07]"
             >
               <div
                 className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center text-3xl`}
@@ -337,17 +337,17 @@ export default function LandingPage() {
         id="stats"
         className="max-w-7xl mx-auto px-6 pb-24"
       >
-        <div className="rounded-[40px] bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-violet-500/10 border border-white/10 p-12">
+        <div className="rounded-[32px] bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-violet-500/10 border border-white/10 px-8 py-10 lg:px-12 lg:py-12">
 
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center"
           >
 
             <div>
-              <h2 className="text-5xl font-bold text-cyan-400">
+              <h2 className="text-4xl lg:text-5xl font-bold text-cyan-400">
                 10K+
               </h2>
 
@@ -604,7 +604,7 @@ export default function LandingPage() {
             </p>
 
             <Link
-              to="/dashboard"
+              to="/login"
               className="inline-flex items-center gap-3 mt-10 px-10 py-5 rounded-2xl bg-cyan-400 text-black font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-cyan-500/30"
             >
 

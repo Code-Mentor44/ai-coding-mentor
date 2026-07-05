@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+    const navigate = useNavigate();
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#020617] px-6">
 
@@ -97,7 +100,8 @@ const Signup = () => {
                     </div>
 
                     <button
-                        type="submit"
+                        type="button"
+                        onClick={() => navigate("/dashboard")}
                         className="w-full rounded-xl bg-cyan-400 py-3 font-semibold text-[#020617] transition hover:bg-cyan-300"
                     >
                         Create Account
@@ -107,9 +111,12 @@ const Signup = () => {
 
                 <p className="mt-8 text-center text-sm text-gray-400">
                     Already have an account?{" "}
-                    <span className="cursor-pointer text-cyan-400 hover:text-cyan-300">
+                    <Link
+                        to="/login"
+                        className="text-cyan-400 hover:text-cyan-300"
+                    >
                         Sign In
-                    </span>
+                    </Link>
                 </p>
 
             </motion.div>

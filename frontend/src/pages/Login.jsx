@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#020617] px-6">
 
@@ -73,8 +75,10 @@ const Login = () => {
                     </div>
 
                     <button
+                        type="button"
+                        onClick={() => navigate("/dashboard")}
                         className="w-full rounded-xl bg-cyan-400 py-3 font-semibold text-[#020617] transition hover:bg-cyan-300"
-                    >
+                  >
                         Sign In
                     </button>
 
@@ -82,9 +86,12 @@ const Login = () => {
 
                 <p className="mt-8 text-center text-sm text-gray-400">
                     Don't have an account?{" "}
-                    <span className="cursor-pointer text-cyan-400 hover:text-cyan-300">
+                    <Link
+                        to="/signup"
+                        className="text-cyan-400 hover:text-cyan-300"
+                    >
                         Sign Up
-                    </span>
+                    </Link>
                 </p>
 
             </motion.div>
