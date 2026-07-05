@@ -1,8 +1,21 @@
 import { motion } from "framer-motion";
 import { HiSparkles } from "react-icons/hi2";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const WelcomeBanner = () => {
+    const [name, setName] = useState("");
+    useEffect(() => {
+
+        const user = JSON.parse(
+            localStorage.getItem("loggedInUser")
+        );
+
+        if (user) {
+            setName(user.fullName);
+        }
+
+    }, []);
     return (
         <motion.section
             initial={{ opacity: 0, y: 25 }}
@@ -73,7 +86,7 @@ const WelcomeBanner = () => {
                     >
                         Good Evening,
                         <span className="text-cyan-400">
-                            {" "}Radhika 👋
+                            {" "}{name} 👋
                         </span>
                     </h1>
 

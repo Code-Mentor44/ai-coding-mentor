@@ -1,8 +1,55 @@
 import { motion } from "framer-motion";
+<<<<<<< Updated upstream
+
+const Login = () => {
+=======
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+
+    const [error, setError] = useState("");
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+    const handleLogin = () => {
+
+        const user = JSON.parse(
+            localStorage.getItem("user")
+        );
+
+        if (!user) {
+            setError("No account found. Please sign up.");
+            return;
+        }
+
+        if (
+            user.email === formData.email &&
+            user.password === formData.password
+        ) {
+
+            localStorage.setItem(
+                "loggedInUser",
+                JSON.stringify(user)
+            );
+
+            navigate("/dashboard");
+
+        } else {
+
+            setError("Invalid email or password");
+
+        }
+    };
+>>>>>>> Stashed changes
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#020617] px-6">
 
@@ -40,6 +87,9 @@ const Login = () => {
                         </label>
 
                         <input
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
                             type="email"
                             placeholder="Enter your email"
                             className="w-full rounded-xl border border-cyan-500/20 bg-[#07111f] px-4 py-3 text-white outline-none transition focus:border-cyan-400"
@@ -52,6 +102,9 @@ const Login = () => {
                         </label>
 
                         <input
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
                             type="password"
                             placeholder="Enter your password"
                             className="w-full rounded-xl border border-cyan-500/20 bg-[#07111f] px-4 py-3 text-white outline-none transition focus:border-cyan-400"
@@ -73,10 +126,19 @@ const Login = () => {
                         </button>
 
                     </div>
-
+                    {
+                        error && (
+                            <p className="text-red-400 text-sm">
+                                {error}
+                            </p>
+                        )
+                    }
                     <button
+<<<<<<< Updated upstream
+=======
                         type="button"
-                        onClick={() => navigate("/dashboard")}
+                        onClick={handleLogin}
+>>>>>>> Stashed changes
                         className="w-full rounded-xl bg-cyan-400 py-3 font-semibold text-[#020617] transition hover:bg-cyan-300"
                   >
                         Sign In

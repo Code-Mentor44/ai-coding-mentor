@@ -1,9 +1,69 @@
-import { motion } from "framer-motion";
+
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+
+    const [errors, setErrors] = useState({});
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+    const handleSignup = () => {
+
+        const newErrors = {};
+
+        if (!formData.fullName.trim()) {
+            newErrors.fullName = "Full name is required";
+        }
+
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+        ) {
+            newErrors.email = "Enter a valid email";
+        }
+
+        if (formData.password.length < 6) {
+            newErrors.password =
+                "Password must be at least 6 characters";
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            newErrors.confirmPassword =
+                "Passwords do not match";
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setErrors({});
+        localStorage.setItem(
+            "user",
+            JSON.stringify({
+                fullName: formData.fullName,
+                email: formData.email,
+                password: formData.password,
+            })
+        );
+
+        navigate("/login");
+    };
+>>>>>>> Stashed changes
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#020617] px-6">
 
@@ -44,10 +104,20 @@ const Signup = () => {
                         </label>
 
                         <input
+                            name="fullName"
+                            value={formData.fullName}
+                            onChange={handleChange}
                             type="text"
                             placeholder="Enter your name"
                             className="w-full rounded-xl border border-cyan-500/20 bg-[#07111f] px-4 py-3 text-white outline-none transition focus:border-cyan-400"
+
                         />
+                        {errors.fullName && (
+                            <p className="mt-1 text-sm text-red-400">
+                                {errors.fullName}
+                            </p>
+                        )}
+
 
                     </div>
 
@@ -60,10 +130,18 @@ const Signup = () => {
                         </label>
 
                         <input
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
                             type="email"
                             placeholder="Enter your email"
                             className="w-full rounded-xl border border-cyan-500/20 bg-[#07111f] px-4 py-3 text-white outline-none transition focus:border-cyan-400"
                         />
+                        {errors.email && (
+                            <p className="mt-1 text-sm text-red-400">
+                                {errors.email}
+                            </p>
+                        )}
 
                     </div>
 
@@ -76,10 +154,18 @@ const Signup = () => {
                         </label>
 
                         <input
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
                             type="password"
                             placeholder="Create a password"
                             className="w-full rounded-xl border border-cyan-500/20 bg-[#07111f] px-4 py-3 text-white outline-none transition focus:border-cyan-400"
                         />
+                        {errors.password && (
+                            <p className="mt-1 text-sm text-red-400">
+                                {errors.password}
+                            </p>
+                        )}
 
                     </div>
 
@@ -92,16 +178,25 @@ const Signup = () => {
                         </label>
 
                         <input
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
                             type="password"
                             placeholder="Confirm your password"
                             className="w-full rounded-xl border border-cyan-500/20 bg-[#07111f] px-4 py-3 text-white outline-none transition focus:border-cyan-400"
                         />
+                        {errors.confirmPassword && (
+                            <p className="mt-1 text-sm text-red-400">
+                                {errors.confirmPassword}
+                            </p>
+                        )}
 
                     </div>
 
                     <button
+
                         type="button"
-                        onClick={() => navigate("/dashboard")}
+                        onClick={handleSignup}
                         className="w-full rounded-xl bg-cyan-400 py-3 font-semibold text-[#020617] transition hover:bg-cyan-300"
                     >
                         Create Account
