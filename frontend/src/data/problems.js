@@ -41,30 +41,29 @@ public:
         topic: "Stack",
         description:
             "Determine if the input string contains valid parentheses.",
-
         starterCode: {
             java: `class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        return new int[]{};
+    public boolean isValid(String s) {
+        return false;
     }
 }`,
 
-            cpp: `#include <vector>
+            cpp: `#include <string>
 using namespace std;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        return {};
+    bool isValid(string s) {
+        return false;
     }
 };`,
 
             python: `class Solution:
-    def twoSum(self, nums, target):
-        return []`,
+    def isValid(self, s):
+        return False`,
 
-            javascript: `function twoSum(nums, target) {
-    return [];
+            javascript: `function isValid(s) {
+    return false;
 }`,
         },
     },
@@ -79,8 +78,8 @@ public:
 
         starterCode: {
             java: `class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        return new int[]{};
+    public int[][] merge(int[][] intervals) {
+        return new int[][]{};
     }
 }`,
 
@@ -89,16 +88,16 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
         return {};
     }
 };`,
 
             python: `class Solution:
-    def twoSum(self, nums, target):
+    def merge(self, intervals):
         return []`,
 
-            javascript: `function twoSum(nums, target) {
+            javascript: `function merge(intervals) {
     return [];
 }`,
         },
@@ -113,28 +112,64 @@ public:
             "Design and implement an LRU Cache data structure.",
 
         starterCode: {
-            java: `class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        return new int[]{};
+            java: `class LRUCache {
+
+    public LRUCache(int capacity) {
+
+    }
+
+    public int get(int key) {
+        return -1;
+    }
+
+    public void put(int key, int value) {
+
     }
 }`,
 
-            cpp: `#include <vector>
-using namespace std;
-
-class Solution {
+            cpp: `class LRUCache {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        return {};
+    LRUCache(int capacity) {
+
+    }
+
+    int get(int key) {
+        return -1;
+    }
+
+    void put(int key, int value) {
+
     }
 };`,
 
-            python: `class Solution:
-    def twoSum(self, nums, target):
-        return []`,
+            python: `class LRUCache:
 
-            javascript: `function twoSum(nums, target) {
-    return [];
+    def __init__(self, capacity):
+        pass
+
+    def get(self, key):
+        return -1
+
+    def put(self, key, value):
+        pass`,
+
+            javascript: `#include <unordered_map>
+#include <list>
+using namespace std;
+
+class LRUCache {
+
+    constructor(capacity) {
+
+    }
+
+    get(key) {
+        return -1;
+    }
+
+    put(key, value) {
+
+    }
 }`,
         },
     },
