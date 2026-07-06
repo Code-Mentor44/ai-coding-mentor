@@ -12,7 +12,7 @@ async def process_submission(
 ) -> SubmissionResponse:
 
     try:
-        print("STDIN RECEIVED:", repr(submission.stdin))
+       
         result = await execute_on_piston(
             client=client,
             language=submission.language,
