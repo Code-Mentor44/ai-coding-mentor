@@ -153,11 +153,7 @@ public:
     def put(self, key, value):
         pass`,
 
-            javascript: `#include <unordered_map>
-#include <list>
-using namespace std;
-
-class LRUCache {
+            javascript: `class LRUCache {
 
     constructor(capacity) {
 
