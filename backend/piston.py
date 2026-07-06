@@ -63,6 +63,7 @@ async def execute_on_piston(
     language: str,
     version: str,
     code: str,
+    stdin: str = "",
 ) -> dict:
     payload = {
         "language": language,
@@ -73,6 +74,7 @@ async def execute_on_piston(
                 "content": code,
             }
         ],
+        "stdin": stdin,
     }
 
     response = await client.post(PISTON_EXECUTE_URL, json=payload)

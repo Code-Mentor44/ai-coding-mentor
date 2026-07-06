@@ -3,8 +3,13 @@ import StatsCards from "../dashboard-components/StatsCard";
 import ContinueCard from "../dashboard-components/ContinueCard";
 import BrainGraphPreview from "../dashboard-components/BrainGraphPreview";
 import RoastCard from "../dashboard-components/Roastcard";
+import { useNavigate, useLocation } from "react-router-dom";
+
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
+  const location = useLocation();
   return (
     <div className="min-h-screen bg-[#070B14] text-white">
       <div className="max-w-7xl mx-auto px-8 py-10">

@@ -19,8 +19,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/brain-graph" element={<BrainGraphPage />} /> 
+          <Route path="/brain-graph" element={<BrainGraphPage />} />
           <Route path="/workspace" element={<CodingWorkspace />} />
+
         </Routes>
       </div>
     </BrowserRouter>

@@ -12,11 +12,13 @@ async def process_submission(
 ) -> SubmissionResponse:
 
     try:
+        print("STDIN RECEIVED:", repr(submission.stdin))
         result = await execute_on_piston(
             client=client,
             language=submission.language,
             version=submission.version,
             code=submission.code,
+           stdin=submission.stdin,
         )
     
     except httpx.ConnectError as exc:

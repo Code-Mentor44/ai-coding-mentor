@@ -19,15 +19,31 @@ const api = axios.create({
  * @param {string|null} [payload.student_id=null] - Optional student identifier.
  * @returns {Promise<Object>} The submission response containing execution details and tutor feedback.
  */
-export const submitCode = async ({ language, code, version = "*", expected_output = null, student_id = null }) => {
-  const response = await api.post("/api/submit", {
+export const submitCode = async ({
+  language,
+  code,
+  version = "*",
+  stdin = "",
+  expected_output = null,
+  student_id = null,
+}) => {
+  console.log({
     language,
     code,
+    stdin,
     version,
     expected_output,
     student_id,
   });
+  const response = await api.post("/api/submit", {
+    language,
+    code,
+    version,
+    stdin,
+    expected_output,
+    student_id,
+  });
+
   return response.data;
 };
-
 export default api;

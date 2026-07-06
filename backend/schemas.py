@@ -12,6 +12,10 @@ class SubmissionRequest(BaseModel):
         description='SemVer selector for the runtime; use "*" to auto-select the latest',
     )
     code: str = Field(..., min_length=1, description="Source code to execute")
+    stdin: str = Field(
+        default="",
+        description="Optional standard input passed to the executing program",
+    )
     expected_output: str | None = Field(
         default=None,
         description="Optional expected stdout for output validation",

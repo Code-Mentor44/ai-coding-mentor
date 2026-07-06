@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { submitCode as apiSubmitCode } from "../services/api";
 
 const EditorContext = createContext();
@@ -94,8 +94,9 @@ export function EditorProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [mode, setMode] = useState("CP");
-  const [language, setLanguage] = useState("java");
-  const [code, setCode] = useState(templates.CP.java);
+  const [language, setLanguage] = useState("python");
+  const [code, setCode] = useState(templates.CP.python);
+  const [customInput, setCustomInput] = useState("");
   const [studentId] = useState(getOrCreateStudentId);
 
   const [result, setResult] = useState({
@@ -139,6 +140,7 @@ export function EditorProvider({ children }) {
       const data = await apiSubmitCode({
         language,
         code,
+        stdin: customInput,
         student_id: studentId,
       });
 
@@ -190,6 +192,7 @@ export function EditorProvider({ children }) {
       const data = await apiSubmitCode({
         language,
         code,
+        stdin: customInput,
         student_id: studentId,
       });
 
@@ -269,6 +272,8 @@ export function EditorProvider({ children }) {
         changeMode,
         setCode,
         runCode,
+        customInput,
+        setCustomInput,
         submitCode,
       }}
     >

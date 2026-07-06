@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useEditor } from "../../context/EditorContext";
 import ExamToolbar from "../exam/ExamToolbar";
 
-export default function CodeEditor() {
+export default function CodeEditor({ problem }) {
   const {
     runCode,
     loading,
@@ -15,8 +15,15 @@ export default function CodeEditor() {
     changeLanguage,
     changeMode,
     setCode,
+    customInput,
+    setCustomInput,
   } = useEditor();
 
+  useEffect(() => {
+    if (problem?.starterCode) {
+      setCode(problem.starterCode[language] || "");
+    }
+  }, [problem, language, setCode]);
   return (
     <div className="w-full">
 
@@ -62,22 +69,20 @@ export default function CodeEditor() {
 
             <button
               onClick={() => changeMode("CP")}
-              className={`px-5 py-2 transition ${
-                mode === "CP"
-                  ? "bg-cyan-500 text-black font-semibold"
-                  : "bg-[#111827] text-gray-300"
-              }`}
+              className={`px-5 py-2 transition ${mode === "CP"
+                ? "bg-cyan-500 text-black font-semibold"
+                : "bg-[#111827] text-gray-300"
+                }`}
             >
               CP Mode
             </button>
 
             <button
               onClick={() => changeMode("Exam")}
-              className={`px-5 py-2 transition ${
-                mode === "Exam"
-                  ? "bg-violet-600 text-white font-semibold"
-                  : "bg-[#111827] text-gray-300"
-              }`}
+              className={`px-5 py-2 transition ${mode === "Exam"
+                ? "bg-violet-600 text-white font-semibold"
+                : "bg-[#111827] text-gray-300"
+                }`}
             >
               Exam Mode
             </button>
@@ -121,7 +126,7 @@ export default function CodeEditor() {
         )}
 
       </div>
-            {/* ================= EXAM TOOLBAR ================= */}
+      {/* ================= EXAM TOOLBAR ================= */}
 
       {mode === "Exam" && (
         <ExamToolbar
@@ -173,7 +178,18 @@ export default function CodeEditor() {
       )}
 
       {/* ================= MONACO EDITOR ================= */}
+      <div className="mb-4">
+        <label className="block text-sm text-gray-400 mb-2">
+          Custom Input
+        </label>
 
+        <textarea
+          value={customInput}
+          onChange={(e) => setCustomInput(e.target.value)}
+          placeholder="Enter input..."
+          className="w-full h-28 rounded-xl bg-[#111827] border border-gray-700 p-4 resize-none"
+        />
+      </div>
       <Editor
         height="420px"
         language={language}
@@ -203,7 +219,7 @@ export default function CodeEditor() {
           },
         }}
       />
-            {/* ================= EXAM NAVIGATION ================= */}
+      {/* ================= EXAM NAVIGATION ================= */}
 
       {mode === "Exam" && (
 
@@ -303,7 +319,7 @@ export default function CodeEditor() {
 
         </div>
 
-      )} 
-          </div>
+      )}
+    </div>
   );
 }
