@@ -1,7 +1,9 @@
 import { Flame, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const RoastCard = () => {
+    const navigate = useNavigate();
     return (
         <motion.div
             whileHover={{ y: -4 }}
@@ -114,6 +116,7 @@ const RoastCard = () => {
                         text-red-400
                         hover:text-red-300
                     "
+                    onClick={() => navigate("/analysis")}
                 >
 
                     View Analysis

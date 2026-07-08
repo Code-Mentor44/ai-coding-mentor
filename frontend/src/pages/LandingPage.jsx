@@ -22,7 +22,7 @@ export default function LandingPage() {
 
       {/* Navbar */}
 
-        <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-2xl bg-[#020617]/70 border-b border-white/5">
+      <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-2xl bg-[#020617]/70 border-b border-white/5">
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3 flex justify-between items-center">
 
@@ -181,9 +181,9 @@ export default function LandingPage() {
               </Link>
 
               <button className="rounded-xl border border-white/10 px-6 py-3 text-sm font-medium text-slate-300 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/5">
-
-                Explore Features
-
+                <a href="#features" className="hover:text-cyan-400 transition">
+                  Explore Features
+                </a>
               </button>
 
             </div>
@@ -193,9 +193,9 @@ export default function LandingPage() {
           {/* Right */}
 
           <motion.div
-            initial={{ opacity:0,x:60 }}
-            animate={{ opacity:1,x:0 }}
-            transition={{ duration:.8 }}
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: .8 }}
             className="relative"
           >
 
@@ -248,7 +248,7 @@ export default function LandingPage() {
         </div>
 
       </section>
-            {/* ================= FEATURES ================= */}
+      {/* ================= FEATURES ================= */}
 
       <section
         id="features"
@@ -493,7 +493,7 @@ export default function LandingPage() {
         </div>
 
       </section>
-            {/* ================= TESTIMONIALS ================= */}
+      {/* ================= TESTIMONIALS ================= */}
 
       <section className="max-w-7xl mx-auto px-6 pb-24">
 
