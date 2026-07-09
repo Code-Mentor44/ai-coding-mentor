@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { login } from "../lib/firebase/auth";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -20,24 +19,27 @@ const Login = () => {
         });
     };
 
-    const handleLogin = async () => {
+    const handleLogin = () => {
+        const user = JSON.parse(localStorage.getItem("user"));
 
-        try {
+        if (!user) {
+            setError("No account found. Please sign up.");
+            return;
+        }
 
-            await login(
-                formData.email,
-                formData.password
+        if (
+            user.email === formData.email &&
+            user.password === formData.password
+        ) {
+            localStorage.setItem(
+                "loggedInUser",
+                JSON.stringify(user)
             );
 
             navigate("/dashboard");
-
+        } else {
+            setError("Invalid email or password");
         }
-        catch (error) {
-
-            setError(error.message);
-
-        }
-
     };
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#020617] px-6">

@@ -3,11 +3,21 @@ import { HiSparkles } from "react-icons/hi2";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
-import { auth } from "../lib/firebase/firebase";
 
 const WelcomeBanner = () => {
     const navigate = useNavigate()
-    const name = auth.currentUser?.displayName || "Coder";
+    const [name, setName] = useState("");
+    useEffect(() => {
+
+        const user = JSON.parse(
+            localStorage.getItem("loggedInUser")
+        );
+
+        if (user) {
+            setName(user.fullName);
+        }
+
+    }, []);
     return (
         <motion.section
             initial={{ opacity: 0, y: 25 }}
