@@ -1,5 +1,6 @@
 import { BrainCircuit, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom"
 
 const topics = [
     {
@@ -29,6 +30,7 @@ const topics = [
 ];
 
 const BrainGraphPreview = () => {
+    const navigate = useNavigate();
     return (
         <motion.div
             whileHover={{ y: -4 }}
@@ -127,6 +129,7 @@ const BrainGraphPreview = () => {
                     text-cyan-400
                     hover:text-cyan-300
                 "
+                onClick={() => navigate("/brain-graph")}
             >
 
                 View Full Graph

@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { HiSparkles } from "react-icons/hi2";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
 
 const WelcomeBanner = () => {
+    const navigate = useNavigate()
     const [name, setName] = useState("");
     useEffect(() => {
 
@@ -93,7 +95,7 @@ const WelcomeBanner = () => {
                     <p
                         className="
                             mt-4
-                            max-w-xl
+                            max-w-2xl
                             text-gray-400
                             leading-7
                         "
@@ -131,6 +133,7 @@ const WelcomeBanner = () => {
                         transition
                         hover:bg-cyan-300
                     "
+                    onClick={() => navigate("/resume-learning")}
                 >
 
                     Resume Learning
