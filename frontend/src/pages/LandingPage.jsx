@@ -180,11 +180,12 @@ export default function LandingPage() {
 
               </Link>
 
-              <button className="rounded-xl border border-white/10 px-6 py-3 text-sm font-medium text-slate-300 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/5">
-                <a href="#features" className="hover:text-cyan-400 transition">
-                  Explore Features
-                </a>
-              </button>
+              <a
+                href="`#features`"
+                className="rounded-xl border border-white/10 px-6 py-3 text-sm font-medium text-slate-300 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/5"
+              >
+                Explore Features
+              </a>
 
             </div>
 
