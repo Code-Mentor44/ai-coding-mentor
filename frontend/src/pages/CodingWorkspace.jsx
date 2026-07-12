@@ -16,7 +16,10 @@ export default function CodingWorkspace() {
 
   return (
     <div className="min-h-screen text-white relative z-10">
-      <Navbar />
+      <Navbar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
 
       <div className="pt-28 px-8 pb-8">
         <div className="max-w-7xl mx-auto">

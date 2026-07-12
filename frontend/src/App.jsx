@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import AIBackground from "./components/layout/AIBackground";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
@@ -7,6 +6,8 @@ import CodingWorkspace from "./pages/CodingWorkspace";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import BrainGraphPage from "./pages/BrainGraphPage";
+import Analysis from "./pages/Analysis";
+import ResumeLearning from "./pages/ResumeLearning"
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/brain-graph" element={<BrainGraphPage />} />
           <Route path="/workspace" element={<CodingWorkspace />} />
-
+          <Route path="/analysis" element={<Analysis />} />
+          <Route path="/resume-learning" element={<ResumeLearning />} />
         </Routes>
       </div>
     </BrowserRouter>
