@@ -1,6 +1,7 @@
 import httpx
+import os
 
-PISTON_EXECUTE_URL = "http://localhost:2000/api/v2/execute"
+PISTON_EXECUTE_URL = os.getenv("PISTON_API_URL", "http://localhost:2000/api/v2/execute")
 PISTON_REQUEST_TIMEOUT = 30.0
 
 LANGUAGE_FILENAMES: dict[str, str] = {

@@ -1,0 +1,57 @@
+services:
+    frontend:
+        build: ./frontend
+        ports:
+            - "5173:5173"
+        networks:
+            - My_Network
+
+    backend:
+        build: ./backend
+        ports:
+            - "8000:8000"
+        networks:
+            - My_Network
+        environment:
+            - PISTON_API_URL=http://piston:2000/api/v2/execute
+        depends_on: 
+            - piston
+        
+
+    piston:
+        build: 
+            context: ./backend
+            dockerfile: Dockerfile_Piston
+        ports:
+            - "2000:2000"
+        networks:
+            - My_Network
+        volumes:
+            - piston_data:/piston/packages
+        privileged: true
+    
+    installation:
+        image: node:18-alpine
+        depends_on:
+            - piston
+        networks:
+            - My_Network
+        command: >
+            sh -c "
+            echo '⏳ Waiting 10 seconds for Piston API to wake up...' &&
+            until wget -q -O- http://piston:2000/api/v2/runtimes > /dev/null 2>&1; do sleep 2; done &&
+            echo '⚙️ Fetching official Piston CLI...' &&
+            apk add --no-cache git &&
+            git clone https://github.com/engineer-man/piston.git /tmp/piston &&
+            cd /tmp/piston/cli &&
+            npm install &&
+            echo '⚙️ Instructing Piston API to install language runtimes...' &&
+            node index.js -u http://piston:2000 ppman install python node gcc java &&
+            echo '🚀 ALL PACKAGES INSTALLED SUCCESSFULLY!!'
+            "
+
+networks:
+    My_Network:
+
+volumes:
+    piston_data:
