@@ -1,11 +1,8 @@
-name: pr-pipeline
+name: main-pipeline
 
 on:
-    pull_request:
+    push:
         branches: [main]
-        types: 
-            - opened
-            - synchronize
 
 jobs:
     build_test_workflow:
@@ -13,17 +10,37 @@ jobs:
         with:
             python-version: '3.12'
             run_tests: true
+            
+    generate-sha:
+        needs: build_test_workflow
+        runs-on: ubuntu-latest
+        outputs:
+            short_sha: ${{ steps.sha_id.outputs.short_sha }}
+        steps:
+            - name: code checkout
+              uses: actions/checkout@v4
+
+            - name: Get the short sha
+              id: sha_id
+              run: |
+                echo "short_sha=$(git rev-parse HEAD | cut -c 1-7)" >> $GITHUB_OUTPUT
 
     reusable-docker-workflow:
-        uses: ./.github/workflows/resuable-docker.yml
-        needs: build_test_workflow
+        needs: [build_test_workflow, generate-sha]
+        uses: ./.github/workflows/reusable-docker.yml
         with:
-            tags: latest
+            image: coding_Mentor_ai_image
+            tags: "latest,sha-${{ needs.generate-sha.outputs.short_sha }}"
+        secrets: 
+            docker_username: ${{ secrets.docker_username }}
+            docker_token: ${{ secrets.docker_token }}
 
     deploy:
+        runs-on: ubuntu-latest
+        environment: production
         needs: reusable-docker-workflow
         steps:
             - name: Print the default message
-              run: echo "Deploying the image to production"
+              run: echo "Deploying the <${{ needs.reusable-docker-workflow.outputs.my_output }}> to production"
               
 
