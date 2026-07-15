@@ -38,8 +38,11 @@ jobs:
 
             - name: Check if run test is true
               id: run_id
-              if: ${{ inputs.run_tests }} == true
+              if: inputs.run_tests == true
               run: |
+                  echo "Installing pytest framework..."
+                  pip install pytest  
+
                   echo "Tests Ran Successfully!"
                   pytest backend/ || exit 1
 
