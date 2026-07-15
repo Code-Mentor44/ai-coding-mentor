@@ -25,22 +25,29 @@ jobs:
               run: |
                 echo "short_sha=$(git rev-parse HEAD | cut -c 1-7)" >> $GITHUB_OUTPUT
 
-    reusable-docker-workflow:
+    reusable-docker-backend-workflow:
         needs: [build_test_workflow, generate-sha]
-        uses: ./.github/workflows/reusable-docker.yml
+        uses: ./.github/workflows/reusable-docker-backend.yml
         with:
-            image: coding_mentor_ai_image
+            image: coding_mentor_ai_backend
             tags: "sha-${{ needs.generate-sha.outputs.short_sha }}"
-        secrets: 
-            docker_username: ${{ secrets.DOCKER_USERNAME }}
-            docker_token: ${{ secrets.DOCKER_PASSWORD }}
+        secrets: inherit
+
+    reusable-docker-frontend-workflow:
+        needs: [build_test_workflow, generate-sha]
+        uses: ./.github/workflows/reusable-docker-frontend.yml
+        with:
+            image: coding_mentor_ai_frontend
+            tags: "sha-${{ needs.generate-sha.outputs.short_sha }}"
+        secrets: inherit
 
     deploy:
         runs-on: ubuntu-latest
         environment: production
-        needs: reusable-docker-workflow
+        needs: [reusable-docker-backend-workflow, reusable-docker-frontend-workflow]
         steps:
             - name: Print the default message
-              run: echo "Deploying the <${{ needs.reusable-docker-workflow.outputs.my_output }}> to production"
-              
-
+              run: |
+                  echo "Backend Image published: <${{ needs.reusable-docker-backend-workflow.outputs.my_output }}>"
+                  echo "Frontend Image published: <${{ needs.reusable-docker-frontend-workflow.outputs.my_output }}>"
+                  echo "Deploying both microservices to production environment gates."

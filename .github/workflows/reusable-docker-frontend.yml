@@ -42,7 +42,8 @@ jobs:
               id: Build_and_push
               uses: docker/build-push-action@v6
               with: 
-                context: .
+                context: ./frontend
+                file: ./frontend/Dockerfile
                 push: true
                 tags: |
                     ${{ secrets.docker_username }}/${{ inputs.image }}:latest
