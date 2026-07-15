@@ -1,0 +1,53 @@
+name: reusable-docker
+
+on: 
+    workflow_call:
+        inputs:
+            image: 
+                description: This is the docker image
+                type: string
+                required: true
+            tags:
+                description: This is the docker image tag
+                type: string
+                required: true
+        secrets:
+            docker_username: 
+                description: This is the dockerhub username
+                required: true
+            docker_token: 
+                description: This is the dockerhub token (password)
+                required: true
+        outputs: 
+            my_output:
+                description: This is the output section of the workflow 
+                value: ${{ jobs.docker_image.outputs.status }}
+
+jobs:
+    docker_image:
+        runs-on: ubuntu-latest
+        outputs:
+            status: ${{ steps.Build_and_puch.outputs.url }}
+        steps:
+            - name: Checkout the code
+              uses: actions/checkout@v4
+
+            - name: Login to DockerHub
+              run: docker/login-action@v4
+              with: 
+                username: ${{ secrets.docker_username }}
+                token: ${{ secrets.docker_token }}
+
+            - name: Build and push the image
+              id: Build_and_puch
+              run: |
+                  FULL_IMAGE_PATH: ${{ secrets.docker_username }}/${{ inputs.image }}:${{ inputs.tags }}
+                  echo "Build the image.."
+                  docker build -t $FULL_IMAGE_PATH .
+
+                  echo "Running the container.."
+                  docker push $FULL_IMAGE_PATH
+
+                  echo "url=$FULL_IMAGE_PATH" >> $GITHUB_OUTPUT
+              
+    

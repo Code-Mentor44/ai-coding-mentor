@@ -1,0 +1,29 @@
+name: pr-pipeline
+
+on:
+    pull_request:
+        branches: [main]
+        types: 
+            - opened
+            - synchronize
+
+jobs:
+    build_test_workflow:
+        uses: ./.github/workflows/reusable-build-test.yml
+        with:
+            python-version: '3.12'
+            run_tests: true
+
+    reusable-docker-workflow:
+        uses: ./.github/workflows/resuable-docker.yml
+        needs: build_test_workflow
+        with:
+            tags: latest
+
+    deploy:
+        needs: reusable-docker-workflow
+        steps:
+            - name: Print the default message
+              run: echo "Deploying the image to production"
+              
+
