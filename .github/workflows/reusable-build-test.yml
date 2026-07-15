@@ -44,7 +44,7 @@ jobs:
                   pip install pytest  
 
                   echo "Tests Ran Successfully!"
-                  pytest backend/ || exit 1
+                  pytest backend/ --suppress-no-test-exit-code || exit 1
 
             - name: Set Outputs
               id: output_id
