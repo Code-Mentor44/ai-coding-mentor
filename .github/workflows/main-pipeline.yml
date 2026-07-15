@@ -32,8 +32,8 @@ jobs:
             image: coding_mentor_ai_image
             tags: "sha-${{ needs.generate-sha.outputs.short_sha }}"
         secrets: 
-            docker_username: ${{ secrets.docker_username }}
-            docker_token: ${{ secrets.docker_token }}
+            docker_username: ${{ secrets.DOCKER_USERNAME }}
+            docker_token: ${{ secrets.DOCKER_PASSWORD }}
 
     deploy:
         runs-on: ubuntu-latest
