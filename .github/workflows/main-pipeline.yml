@@ -29,17 +29,21 @@ jobs:
         needs: [build_test_workflow, generate-sha]
         uses: ./.github/workflows/reusable-docker-backend.yml
         with:
-            image: coding_mentor_ai_backend
+            image: coding-mentor-ai-backend
             tags: "sha-${{ needs.generate-sha.outputs.short_sha }}"
-        secrets: inherit
+        secrets: 
+             docker_username: ${{ secrets.DOCKER_USERNAME }}
+             docker_token: ${{ secrets.DOCKER_TOKEN }}
 
     reusable-docker-frontend-workflow:
         needs: [build_test_workflow, generate-sha]
         uses: ./.github/workflows/reusable-docker-frontend.yml
         with:
-            image: coding_mentor_ai_frontend
+            image: coding-mentor-ai-frontend
             tags: "sha-${{ needs.generate-sha.outputs.short_sha }}"
-        secrets: inherit
+        secrets: 
+            docker_username: ${{ secrets.DOCKER_USERNAME }}
+            docker_token: ${{ secrets.DOCKER_TOKEN }}
 
     deploy:
         runs-on: ubuntu-latest
