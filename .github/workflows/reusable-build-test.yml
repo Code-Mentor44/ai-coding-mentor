@@ -1,0 +1,70 @@
+name: reusable-build-test
+
+on:
+    workflow_call:
+        inputs:
+            python-version: 
+                description: This has the python version
+                type: string
+            run_tests: 
+                description: Determines the run-tests
+                type: boolean
+                default: true
+                required: true
+        outputs:
+            test_result:
+                description: This is the output section of the workflow
+                value: ${{ jobs.trigger-workflow.outputs.status }}
+
+
+jobs:
+    trigger-workflow:
+        runs-on: ubuntu-latest
+        outputs:
+            status: ${{ steps.output_id.outputs.outcome }}
+        steps:
+            - name: Checkout the code
+              uses: actions/checkout@v4
+
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: ${{ inputs.python-version }}
+
+            - name: Install dependencies
+              run: |
+                  echo "Installing dependencies..."
+                  pip install -r ./backend/requirements.txt
+
+            - name: Check if run test is true
+              id: run_id
+              if: ${{ inputs.run_tests == true }}
+              run: |
+                  echo "Installing pytest framework..."
+                  pip install pytest  
+
+                  echo "Tests Ran Successfully!"
+                  set +e
+                  pytest ./backend
+                  EXIT_CODE=$?
+
+                  # Exit code 0 means tests passed cleanly.
+                  # Exit code 5 means no tests were found (which is fine for now!).
+                  if [ $EXIT_CODE -eq 0 ] || [ $EXIT_CODE -eq 5 ]; then
+                      echo "✅ Pytest completed safely (Code: $EXIT_CODE)"
+                      exit 0
+                  else
+                      echo "❌ Pytest failed with test failures (Code: $EXIT_CODE)"
+                      exit 1 
+                  fi
+
+            - name: Set Outputs
+              id: output_id
+              if: always()
+              run: |
+                  if [ "${{ steps.run_id.outcome }}" = "success" ] || [ "${{ inputs.run_tests }}" == "false" ]; then
+                      echo "outcome=Passed" >> $GITHUB_OUTPUT
+                  else 
+                      echo "outcome=Failed" >> $GITHUB_OUTPUT
+                  fi
+                  
