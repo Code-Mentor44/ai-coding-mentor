@@ -46,7 +46,6 @@ jobs:
                 push: true
                 tags: |
                     ${{ secrets.docker_username }}/${{ inputs.image }}:latest
-                    ${{ secrets.docker_username }}/${{ inputs.image }}:sha-${{ github.sha }}
-
+                    ${{ secrets.docker_username }}/${{ inputs.image }}:${{ inputs.tags }}
               
     

@@ -30,7 +30,7 @@ jobs:
         uses: ./.github/workflows/reusable-docker.yml
         with:
             image: coding_mentor_ai_image
-            tags: "latest,sha-${{ needs.generate-sha.outputs.short_sha }}"
+            tags: "sha-${{ needs.generate-sha.outputs.short_sha }}"
         secrets: 
             docker_username: ${{ secrets.docker_username }}
             docker_token: ${{ secrets.docker_token }}
