@@ -18,5 +18,7 @@ jobs:
         needs: pr-pipe
         steps:
             - name: Print the summary!
+              env: 
+                SOURCE_BRANCH: ${{ github.head_ref }}
               run: |
-                  echo "PR check passed for ${{ github.head_ref }}"
+                  echo "PR check passed for $SOURCE_BRANCH"

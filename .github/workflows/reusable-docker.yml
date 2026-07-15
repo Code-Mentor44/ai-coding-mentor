@@ -27,7 +27,7 @@ jobs:
     docker_image:
         runs-on: ubuntu-latest
         outputs:
-            status: ${{ steps.Build_and_push.outputs.url }}
+            status: ${{ steps.Build_and_push.outputs.digest }}
         steps:
             - name: Checkout the code
               uses: actions/checkout@v4
@@ -40,14 +40,13 @@ jobs:
 
             - name: Build and push the image
               id: Build_and_push
-              run: |
-                  FULL_IMAGE_PATH="${{ secrets.docker_username }}/${{ inputs.image }}:${{ inputs.tags }}"
-                  echo "Build the image.."
-                  docker build -t $FULL_IMAGE_PATH .
+              uses: docker/build-push-action@v6
+              with: 
+                context: .
+                push: true
+                tags: |
+                    ${{ secrets.docker_username }}/${{ inputs.image }}:latest
+                    ${{ secrets.docker_username }}/${{ inputs.image }}:sha-${{ github.sha }}
 
-                  echo "Running the container.."
-                  docker push $FULL_IMAGE_PATH
-
-                  echo "url=$FULL_IMAGE_PATH" >> $GITHUB_OUTPUT
               
     

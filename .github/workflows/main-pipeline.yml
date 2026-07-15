@@ -29,7 +29,7 @@ jobs:
         needs: [build_test_workflow, generate-sha]
         uses: ./.github/workflows/reusable-docker.yml
         with:
-            image: coding_Mentor_ai_image
+            image: coding_mentor_ai_image
             tags: "latest,sha-${{ needs.generate-sha.outputs.short_sha }}"
         secrets: 
             docker_username: ${{ secrets.docker_username }}
