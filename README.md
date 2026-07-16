@@ -16,6 +16,15 @@
   <img alt="React" src="https://img.shields.io/badge/frontend-React-61DAFB">
   <img alt="Docker" src="https://img.shields.io/badge/sandbox-Docker%20%2B%20Piston-2496ED">
   <img alt="Status" src="https://img.shields.io/badge/status-active%20development-yellow">
+  <a href="https://github.com/Code-Mentor44/ai-coding-mentor/actions/workflows/main-pipeline.yml">
+    <img src="https://github.com/Code-Mentor44/ai-coding-mentor/actions/workflows/main-pipeline.yml/badge.svg" alt="Main Pipeline">
+  </a>
+  <a href="https://github.com/Code-Mentor44/ai-coding-mentor/actions/workflows/pr-pipeline.yml">
+    <img src="https://github.com/Code-Mentor44/ai-coding-mentor/actions/workflows/pr-pipeline.yml/badge.svg" alt="PR Pipeline">
+  </a>
+  <a href="https://github.com/Code-Mentor44/ai-coding-mentor/actions/workflows/health-check.yml">
+    <img src="https://github.com/Code-Mentor44/ai-coding-mentor/actions/workflows/health-check.yml/badge.svg" alt="Health Check">
+  </a>
 </p>
 
 <p align="center">
