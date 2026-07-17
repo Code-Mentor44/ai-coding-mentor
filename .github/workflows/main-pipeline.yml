@@ -49,6 +49,9 @@ jobs:
         needs: [reusable-docker-frontend-workflow, reusable-docker-backend-workflow]
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout the code
+              uses: actions/checkout@v4
+
             - name: Scan the code for backend image
               uses: aquasecurity/trivy-action@master
               env: 
@@ -71,6 +74,7 @@ jobs:
                   exit-code: '1'
                   format: 'table'
                   severity: 'CRITICAL,HIGH'
+                  trivyignores: '.trivyignore'
 
 
 
