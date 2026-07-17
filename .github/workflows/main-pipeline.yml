@@ -45,10 +45,38 @@ jobs:
             docker_username: ${{ secrets.DOCKER_USERNAME }}
             docker_token: ${{ secrets.DOCKER_PASSWORD }}
 
+    security-element:
+        needs: [reusable-docker-frontend-workflow, reusable-docker-backend-workflow]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Scan the code for backend image
+              uses: aquasecurity/trivy-action@master
+              env: 
+                  TRIVY_USERNAME: ${{ secrets.DOCKER_USERNAME }} 
+                  TRIVY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+              with:
+                  image-ref: ${{ secrets.DOCKER_USERNAME }}/coding-mentor-ai-backend:latest
+                  exit-code: '1'
+                  format: 'table'
+                  severity: 'CRITICAL,HIGH'
+
+            - name: Scan the code for Frontend image
+              uses: aquasecurity/trivy-action@master
+              env: 
+                  TRIVY_USERNAME: ${{ secrets.DOCKER_USERNAME }} 
+                  TRIVY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+              with:
+                  image-ref: ${{ secrets.DOCKER_USERNAME }}/coding-mentor-ai-frontend:latest
+                  exit-code: '1'
+                  format: 'table'
+                  severity: 'CRITICAL,HIGH'
+
+
+
     deploy:
         runs-on: ubuntu-latest
         environment: production
-        needs: [reusable-docker-backend-workflow, reusable-docker-frontend-workflow]
+        needs: [reusable-docker-backend-workflow, reusable-docker-frontend-workflow, security-element]
         steps:
             - name: Print the default message
               run: |
