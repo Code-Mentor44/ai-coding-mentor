@@ -22,3 +22,8 @@ jobs:
                 SOURCE_BRANCH: ${{ github.head_ref }}
               run: |
                   echo "PR check passed for $SOURCE_BRANCH"
+
+            - name: Check the dependencies for the PR
+              uses: actions/dependency-review-action@v4
+              with:
+                  fail-on-severity: critical
