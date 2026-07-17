@@ -4,6 +4,10 @@ on:
     push:
         branches: [main]
 
+permissions:
+  contents: read
+
+
 jobs:
     build_test_workflow:
         uses: ./.github/workflows/reusable-build-test.yml
