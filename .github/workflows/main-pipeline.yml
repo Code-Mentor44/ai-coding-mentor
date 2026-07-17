@@ -59,6 +59,7 @@ jobs:
                   exit-code: '1'
                   format: 'table'
                   severity: 'CRITICAL,HIGH'
+                  trivyignores: '.trivyignore'
 
             - name: Scan the code for Frontend image
               uses: aquasecurity/trivy-action@master
